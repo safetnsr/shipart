@@ -72,11 +72,17 @@ shipart . --dry-run
 **terminal-dark** (default)
 pure black background, white monospace text, terminal aesthetic. built for dark mode README viewers.
 
+![terminal-dark](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/banner-terminal-dark.png)
+
 **minimal**
 white background, clean typography, lots of negative space. classic open source look.
 
+![minimal](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/banner-minimal.png)
+
 **bold**
 high-contrast, colored background, large impactful typography. stands out in feeds and social previews.
+
+![bold](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/banner-bold.png)
 
 ---
 

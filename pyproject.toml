@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "shipart"
+version = "0.1.0"
+description = "generate README hero images for open source projects"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "safetnsr" }]
+keywords = ["readme", "banner", "hero-image", "open-source", "cli", "ai", "gemini"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "click>=8.0",
+    "google-genai>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "build",
+    "hatchling",
+]
+image = [
+    "Pillow>=10.0",
+]
+
+[project.scripts]
+shipart = "shipart.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/safetnsr/shipart"
+Repository = "https://github.com/safetnsr/shipart"
+
+[tool.hatch.build.targets.wheel]
+packages = ["shipart"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

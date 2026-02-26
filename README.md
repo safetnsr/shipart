@@ -2,7 +2,9 @@
 
 your README deserves better than a blank top.
 
-give your open source project a professional hero image in one command. shipart reads your README and package files, builds a smart prompt, and generates a 1280×640 banner using Nano Banana 2 (gemini-3.1-flash-image-preview).
+![shipart](https://raw.githubusercontent.com/safetnsr/shipart/main/banner.png)
+
+generate README hero images for open source projects using AI. one command, six built-in themes, three dynamic theme modes.
 
 ```
 $ shipart .
@@ -11,8 +13,8 @@ shipart → /home/user/myproject
   name:        myproject
   description: a fast CLI for developers
   category:    CLI tool
-  tech:        python, click, httpx
-  theme:       terminal-dark
+  tech:        Node.js, TypeScript, CLI
+  theme:       gradient (default)
 
   generating with gemini-3.1-flash-image-preview... (attempt 1/3)
   saved → /home/user/myproject/banner.png (182 KB)
@@ -21,97 +23,147 @@ done. 1 banner(s) generated.
   → /home/user/myproject/banner.png
 ```
 
-![shipart](https://raw.githubusercontent.com/safetnsr/shipart/main/banner.png)
-
 ---
 
 ## install
 
 ```bash
-pip install shipart
+npm install -g @safetnsr/shipart
 ```
 
-requires a Google AI key (free tier works):
+or run without installing:
+
+```bash
+npx @safetnsr/shipart .
+```
+
+get a free api key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey), then:
 
 ```bash
 export GOOGLE_AI_KEY=your_key_here
 ```
-
-get one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
 
 ---
 
 ## usage
 
 ```bash
-# generate banner for current project
-shipart .
-
-# specify a different project directory
-shipart ./myproject
-
-# choose a theme
-shipart . --theme minimal
-shipart . --theme bold
-shipart . --theme terminal-dark   # default
-
-# generate 3 variations (saves banner-1.png, banner-2.png, banner-3.png)
-shipart . --variations 3
-
-# auto-patch README.md to include the banner
-shipart . --patch-readme
-
-# preview the prompt without generating
-shipart . --dry-run
+shipart .                                          # generate for current directory
+shipart ./myproject                                # specify directory
+shipart . --theme bold                             # choose built-in theme
+shipart . --theme-from-url https://vercel.com      # extract theme from a website
+shipart . --theme-from-css ./src/styles.css        # extract theme from CSS variables
+shipart . --theme-prompt "dark purple glassmorphism sharp corners"
+shipart . --variations 3                           # generate 3 alternatives
+shipart . --output ./docs/hero.png                 # custom output path
+shipart . --patch-readme                           # also update README.md
+shipart . --dry-run                                # preview the prompt
+shipart --list-themes                              # show all built-in themes
 ```
 
 ---
 
 ## themes
 
-**terminal-dark** (default)
-pure black background, white monospace text, terminal aesthetic. built for dark mode README viewers.
+six built-in themes:
 
-![terminal-dark](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/banner-terminal-dark.png)
+**terminal-dark** — pure black bg, white monospace text, terminal aesthetic
 
-**minimal**
-white background, clean typography, lots of negative space. classic open source look.
+![terminal-dark](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-terminal-dark.png)
 
-![minimal](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/banner-minimal.png)
+**minimal** — white bg, clean typography, lots of negative space
 
-**bold**
-high-contrast, colored background, large impactful typography. stands out in feeds and social previews.
+![minimal](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-minimal.png)
 
-![bold](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/banner-bold.png)
+**bold** — high-contrast, large typography, vibrant background
+
+![bold](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-bold.png)
+
+**gradient** — dark gradient bg (deep blue → purple), modern SaaS look *(default)*
+
+![gradient](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-gradient.png)
+
+**retro** — pixel art / 8-bit aesthetic, bright colors on dark
+
+![retro](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-retro.png)
+
+**paper** — off-white, subtle texture, editorial/blog feel
+
+![paper](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-paper.png)
 
 ---
 
-## how it works
+## dynamic themes
 
-shipart reads your project directory and extracts:
+the killer feature: generate themes from real sources.
 
-- **name** — from `package.json`, `pyproject.toml`, `Cargo.toml`, or the first `# H1` in your README
-- **description** — from the package file `description` field, or first paragraph in README
-- **tech stack** — from dependency lists or code block languages
-- **category** — CLI tool, npm package, Python library, Rust crate, etc.
+### from a url
 
-it then builds a detailed prompt and calls `gemini-3.1-flash-image-preview` via the `google-genai` SDK.
+screenshots the URL, extracts dominant colors and style:
 
-supports: `package.json`, `pyproject.toml`, `Cargo.toml`, `README.md`
+```bash
+shipart . --theme-from-url https://linear.app
+```
+
+requires playwright: `npm install playwright && npx playwright install chromium`
+
+### from css
+
+parses CSS custom properties from your stylesheet:
+
+```bash
+shipart . --theme-from-css ./src/globals.css
+```
+
+works with any CSS file containing `--primary`, `--background`, `--accent`, etc. also detects tailwind config.
+
+### free-form prompt
+
+describe your aesthetic in plain text:
+
+```bash
+shipart . --theme-prompt "brutalist, newspaper print, bold black typography on yellowed paper"
+```
+
+---
+
+## smart project reading
+
+shipart reads your project automatically:
+
+- `package.json` — name, description, keywords, main dependencies
+- `pyproject.toml` / `Cargo.toml` / `go.mod` — fallback for python, rust, go projects
+- `README.md` — first H1, first paragraph, code block languages
 
 ---
 
 ## api key
 
-shipart looks for your key in:
+shipart looks for your key in this order:
 
-1. `GOOGLE_AI_KEY` environment variable
-2. `~/.openclaw/workspace/.credentials/google_ai_key` (openclaw users)
-3. `~/.config/shipart/key`
-4. prompts you if none found
+1. `GOOGLE_AI_KEY` env var
+2. `GEMINI_API_KEY` env var
+3. `~/.openclaw/workspace/.credentials/google_ai_key`
+4. `~/.config/shipart/key`
+
+free tier at [aistudio.google.com/apikey](https://aistudio.google.com/apikey) works fine.
 
 ---
 
-## license
+## options
 
-mit
+| flag | description | default |
+|------|-------------|---------|
+| `--theme <name>` | built-in theme | `gradient` |
+| `--theme-from-url <url>` | extract theme from website | — |
+| `--theme-from-css <file>` | extract theme from CSS | — |
+| `--theme-prompt <text>` | custom theme description | — |
+| `--variations <n>` | number of images (1-3) | `1` |
+| `--output <path>` | output file path | `./banner.png` |
+| `--patch-readme` | prepend banner to README.md | `false` |
+| `--dry-run` | print prompt, don't generate | `false` |
+| `--list-themes` | show available themes | — |
+
+---
+
+mit license

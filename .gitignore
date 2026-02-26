@@ -1,13 +1,5 @@
-__pycache__/
-*.py[cod]
-*.egg-info/
+node_modules/
 dist/
-build/
-.eggs/
-*.egg
-.venv/
-venv/
-banner.png
-banner-*.png
-.pytest_cache/
-*.pyc
+*.js.map
+.env
+.env.local

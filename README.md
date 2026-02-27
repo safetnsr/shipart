@@ -4,7 +4,7 @@ your README deserves better than a blank top.
 
 ![shipart](https://raw.githubusercontent.com/safetnsr/shipart/main/banner.png)
 
-generate README hero images for open source projects using AI. one command, six built-in themes, three dynamic theme modes.
+generate README hero images for open source projects using AI. one command, six built-in themes, three dynamic theme modes powered by nano banana 2 (gemini-3.1-flash-image-preview).
 
 ```
 $ shipart .
@@ -14,10 +14,10 @@ shipart → /home/user/myproject
   description: a fast CLI for developers
   category:    CLI tool
   tech:        Node.js, TypeScript, CLI
-  theme:       gradient (default)
+  theme:       terminal-dark
 
   generating with gemini-3.1-flash-image-preview... (attempt 1/3)
-  saved → /home/user/myproject/banner.png (182 KB)
+  saved → /home/user/myproject/banner.png (1.1 MB)
 
 done. 1 banner(s) generated.
   → /home/user/myproject/banner.png
@@ -51,11 +51,8 @@ export GOOGLE_AI_KEY=your_key_here
 shipart .                                          # generate for current directory
 shipart ./myproject                                # specify directory
 shipart . --theme bold                             # choose built-in theme
-shipart . --theme-from-url https://vercel.com      # extract theme from a website
-shipart . --theme-from-css ./src/styles.css        # extract theme from CSS variables
-shipart . --theme-prompt "dark purple glassmorphism sharp corners"
-shipart . --variations 3                           # generate 3 alternatives
 shipart . --output ./docs/hero.png                 # custom output path
+shipart . --variations 3                           # generate 3 alternatives
 shipart . --patch-readme                           # also update README.md
 shipart . --dry-run                                # preview the prompt
 shipart --list-themes                              # show all built-in themes
@@ -79,7 +76,7 @@ six built-in themes:
 
 ![bold](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-bold.png)
 
-**gradient** — dark gradient bg (deep blue → purple), modern SaaS look *(default)*
+**gradient** — dark gradient bg (deep blue → purple), modern SaaS look
 
 ![gradient](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-gradient.png)
 
@@ -97,17 +94,19 @@ six built-in themes:
 
 the killer feature: generate themes from real sources.
 
-### from a url
+### --theme-from-url
 
-screenshots the URL, extracts dominant colors and style:
+screenshots the URL, extracts dominant colors and style, uses it to generate your banner:
 
 ```bash
 shipart . --theme-from-url https://linear.app
 ```
 
+![theme-from-url (linear.app)](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-url-linear.png)
+
 requires playwright: `npm install playwright && npx playwright install chromium`
 
-### from css
+### --theme-from-css
 
 parses CSS custom properties from your stylesheet:
 
@@ -117,13 +116,15 @@ shipart . --theme-from-css ./src/globals.css
 
 works with any CSS file containing `--primary`, `--background`, `--accent`, etc. also detects tailwind config.
 
-### free-form prompt
+### --theme-prompt
 
 describe your aesthetic in plain text:
 
 ```bash
-shipart . --theme-prompt "brutalist, newspaper print, bold black typography on yellowed paper"
+shipart . --theme-prompt "dark purple glassmorphism, blurred edges, neon accent"
 ```
+
+![theme-prompt (dark purple glassmorphism)](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-prompt-example.png)
 
 ---
 
@@ -154,7 +155,7 @@ free tier at [aistudio.google.com/apikey](https://aistudio.google.com/apikey) wo
 
 | flag | description | default |
 |------|-------------|---------|
-| `--theme <name>` | built-in theme | `gradient` |
+| `--theme <name>` | built-in theme | `terminal-dark` |
 | `--theme-from-url <url>` | extract theme from website | — |
 | `--theme-from-css <file>` | extract theme from CSS | — |
 | `--theme-prompt <text>` | custom theme description | — |

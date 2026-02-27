@@ -4,7 +4,7 @@
   "description": "generate README hero images for open source projects using AI — with dynamic theme generation",
   "type": "module",
   "bin": {
-    "shipart": "./dist/cli.js"
+    "shipart": "dist/cli.js"
   },
   "files": [
     "dist"
@@ -29,7 +29,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/safetnsr/shipart.git"
+    "url": "git+https://github.com/safetnsr/shipart.git"
   },
   "homepage": "https://github.com/safetnsr/shipart",
   "dependencies": {

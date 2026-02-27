@@ -4,7 +4,7 @@ your README deserves better than a blank top.
 
 ![shipart](https://raw.githubusercontent.com/safetnsr/shipart/main/banner.png)
 
-generate README hero images for open source projects using AI. one command, six built-in themes, three dynamic theme modes powered by nano banana 2 (gemini-3.1-flash-image-preview).
+generate README hero images for open source projects using AI. one command, six built-in themes, three dynamic theme modes powered by nano banana 2 (`gemini-3.1-flash-image-preview`).
 
 ```
 $ shipart .
@@ -25,6 +25,18 @@ done. 1 banner(s) generated.
 
 ---
 
+## api key
+
+get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey), then:
+
+```bash
+export GOOGLE_AI_KEY=your_key_here
+```
+
+shipart also checks `GEMINI_API_KEY`, `~/.openclaw/workspace/.credentials/google_ai_key`, and `~/.config/shipart/key`.
+
+---
+
 ## install
 
 ```bash
@@ -37,12 +49,6 @@ or run without installing:
 npx @safetnsr/shipart .
 ```
 
-get a free api key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey), then:
-
-```bash
-export GOOGLE_AI_KEY=your_key_here
-```
-
 ---
 
 ## usage
@@ -53,6 +59,7 @@ shipart ./myproject                                # specify directory
 shipart . --theme bold                             # choose built-in theme
 shipart . --output ./docs/hero.png                 # custom output path
 shipart . --variations 3                           # generate 3 alternatives
+shipart . --model gemini-2.5-flash                 # use a different google model
 shipart . --patch-readme                           # also update README.md
 shipart . --dry-run                                # preview the prompt
 shipart --list-themes                              # show all built-in themes
@@ -96,7 +103,7 @@ the killer feature: generate themes from real sources.
 
 ### --theme-from-url
 
-screenshots the URL, extracts dominant colors and style, uses it to generate your banner:
+screenshots the URL, extracts dominant colors, uses it as your theme:
 
 ```bash
 shipart . --theme-from-url https://linear.app
@@ -114,6 +121,8 @@ parses CSS custom properties from your stylesheet:
 shipart . --theme-from-css ./src/globals.css
 ```
 
+![theme-from-css](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-css-example.png)
+
 works with any CSS file containing `--primary`, `--background`, `--accent`, etc. also detects tailwind config.
 
 ### --theme-prompt
@@ -124,7 +133,7 @@ describe your aesthetic in plain text:
 shipart . --theme-prompt "dark purple glassmorphism, blurred edges, neon accent"
 ```
 
-![theme-prompt (dark purple glassmorphism)](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-prompt-example.png)
+![theme-prompt](https://raw.githubusercontent.com/safetnsr/shipart/main/docs/theme-prompt-example.png)
 
 ---
 
@@ -138,19 +147,6 @@ shipart reads your project automatically:
 
 ---
 
-## api key
-
-shipart looks for your key in this order:
-
-1. `GOOGLE_AI_KEY` env var
-2. `GEMINI_API_KEY` env var
-3. `~/.openclaw/workspace/.credentials/google_ai_key`
-4. `~/.config/shipart/key`
-
-free tier at [aistudio.google.com/apikey](https://aistudio.google.com/apikey) works fine.
-
----
-
 ## options
 
 | flag | description | default |
@@ -159,6 +155,7 @@ free tier at [aistudio.google.com/apikey](https://aistudio.google.com/apikey) wo
 | `--theme-from-url <url>` | extract theme from website | — |
 | `--theme-from-css <file>` | extract theme from CSS | — |
 | `--theme-prompt <text>` | custom theme description | — |
+| `--model <id>` | google AI model to use | `gemini-3.1-flash-image-preview` |
 | `--variations <n>` | number of images (1-3) | `1` |
 | `--output <path>` | output file path | `./banner.png` |
 | `--patch-readme` | prepend banner to README.md | `false` |

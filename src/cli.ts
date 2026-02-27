@@ -31,6 +31,7 @@ program
   .option('--theme-from-url <url>', 'screenshot a URL and extract its color palette as theme')
   .option('--theme-from-css <file>', 'extract CSS variables from file and use as theme')
   .option('--theme-prompt <text>', 'free-form theme description')
+  .option('--model <id>', 'google AI model to use', 'gemini-3.1-flash-image-preview')
   .option('--variations <n>', 'number of variations to generate (1-3)', '1')
   .option('--output <path>', 'output file path', './banner.png')
   .option('--patch-readme', 'prepend banner to README.md')
@@ -138,7 +139,7 @@ program
 
       if (variations > 1) console.log(`  variation ${i}/${variations}:`);
 
-      await generateBanner(project, theme, outputPath, opts.dryRun);
+      await generateBanner(project, theme, outputPath, opts.dryRun, opts.model);
 
       if (!opts.dryRun) {
         generated.push(outputPath);

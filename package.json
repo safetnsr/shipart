@@ -1,6 +1,6 @@
 {
   "name": "@safetnsr/shipart",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "generate README hero images for open source projects using AI — with dynamic theme generation",
   "type": "module",
   "bin": {

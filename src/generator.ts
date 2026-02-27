@@ -64,6 +64,7 @@ export async function generateBanner(
   theme: ThemeSpec,
   outputPath: string,
   dryRun = false,
+  model = 'gemini-3.1-flash-image-preview',
 ): Promise<void> {
   const prompt = buildPrompt(project, theme.style);
 
@@ -88,10 +89,10 @@ export async function generateBanner(
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`  generating with gemini-3.1-flash-image-preview... (attempt ${attempt}/${maxRetries})`);
+      console.log(`  generating with ${model}... (attempt ${attempt}/${maxRetries})`);
 
       const response = await client.models.generateContent({
-        model: 'gemini-3.1-flash-image-preview',
+        model,
         contents: prompt,
         config: {
           responseModalities: ['TEXT', 'IMAGE'],
